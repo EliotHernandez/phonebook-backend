@@ -1,0 +1,27 @@
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Eliot Hernandez",
+    "number": "0034-666778899"
+}
+
+###
+
+# Missing name error
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "number": "Missing name error"
+}
+
+###
+
+# Missing number error
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Missing number error"
+}
