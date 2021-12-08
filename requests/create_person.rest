@@ -2,7 +2,7 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "Eliot Hernandez",
+    "name": "Eliot Hernandez 2",
     "number": "0034-666778899"
 }
 
@@ -33,6 +33,6 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "Arto Hellas",
+    "name": "Arto Vihavainen",
     "number": "040-789012"
 }
