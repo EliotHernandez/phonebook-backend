@@ -25,3 +25,14 @@ Content-Type: application/json
 {
     "name": "Missing number error"
 }
+
+###
+
+# Name must be unique error
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Arto Hellas",
+    "number": "040-789012"
+}

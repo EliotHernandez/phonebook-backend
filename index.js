@@ -55,6 +55,11 @@ const generateId = () => {
     return Math.floor(Math.random() * (500 - 10)) + 10;
 }
 
+const validName = name => {
+    const duplicated = persons.filter(person => person.name === name)
+    return duplicated.length > 0 ? false : true
+}
+
 app.post('/api/persons', (request, response) => {
     const body = request.body
 
@@ -63,6 +68,13 @@ app.post('/api/persons', (request, response) => {
             error: 'name missing'
         })
     }
+
+    if (!validName(body.name)) {
+        response.status(400).json({
+            error: 'name must be unique'
+        })
+    }
+
     if (!body.number) {
         response.status(400).json({
             error: 'number missing'
@@ -70,7 +82,7 @@ app.post('/api/persons', (request, response) => {
     }
 
     const newPerson = {
-        id: generateId,
+        id: generateId(),
         name: body.name,
         number: body.number
     }
