@@ -1,9 +1,9 @@
-const express = require('express')
+const express = require("express")
 const app = express()
 
 app.use(express.json())
 
-persons = [
+let persons = [
     {
         id: 1,
         name: "Arto Hellas",
@@ -26,17 +26,17 @@ persons = [
     }
 ]
 
-app.get('/api/persons', (request, response) => {
+app.get("/api/persons", (request, response) => {
     response.json(persons)
 })
 
-app.get('/info', (request, response) => {
+app.get("/info", (request, response) => {
     const dateString = new Date().toString()
     const info = `<div><p>Phonebook has info for ${persons.length} people</p><p>${dateString}</p></div>`
     response.send(info)
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get("/api/persons/:id", (request, response) => {
     const id = Number(request.params.id)
     const person = persons.find(person => person.id === id)
 
@@ -44,7 +44,7 @@ app.get('/api/persons/:id', (request, response) => {
     response.status(404).end()
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete("/api/persons/:id", (request, response) => {
     const id = Number(request.params.id)
     persons = persons.filter(person => person.id !== id)
 
@@ -52,7 +52,7 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 const generateId = () => {
-    return Math.floor(Math.random() * (500 - 10)) + 10;
+    return Math.floor(Math.random() * (500 - 10)) + 10
 }
 
 const validName = name => {
@@ -60,24 +60,24 @@ const validName = name => {
     return duplicated.length > 0 ? false : true
 }
 
-app.post('/api/persons', (request, response) => {
+app.post("/api/persons", (request, response) => {
     const body = request.body
 
     if (!body.name) {
-        response.status(400).json({
-            error: 'name missing'
-        })
+        return response.status(400).json({
+            error: "name missing"
+        }).eventNames()
     }
 
     if (!validName(body.name)) {
-        response.status(400).json({
-            error: 'name must be unique'
+        return response.status(400).json({
+            error: "name must be unique"
         })
     }
 
     if (!body.number) {
-        response.status(400).json({
-            error: 'number missing'
+        return response.status(400).json({
+            error: "number missing"
         })
     }
 
