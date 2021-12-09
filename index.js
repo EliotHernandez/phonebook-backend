@@ -78,30 +78,14 @@ app.post("/api/persons", (request, response, next) => {
         })
     }
 
-    Person.find({ "name": body.name })
-        .then(persons => {
-            if (persons.length > 0) {
-                const person = {
-                    name: body.name,
-                    number: body.number
-                }
-                Person.findByIdAndUpdate(request.params.id, person, { new: true })
-                    .then(updatedPerson => {
-                        response.json(updatedPerson)
-                    })
-                    .catch(error => next(error))
-            } else {
-                const person = new Person({
-                    name: body.name,
-                    number: body.number
-                })
+    const person = new Person({
+        name: body.name,
+        number: body.number
+    })
 
-                person.save()
-                    .then(savedPerson => {
-                        response.status(201).json(savedPerson)
-                    })
-                    .catch(error => next(error))
-            }
+    person.save()
+        .then(savedPerson => {
+            response.status(201).json(savedPerson)
         })
         .catch(error => next(error))
 })
@@ -128,6 +112,8 @@ const errorHandler = (error, request, response, next) => {
     console.error(error.message)
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
+    } else if (error.name === 'ValidationError') {
+        return response.status(400).json({ error: error.message })
     }
     next(error)
 }
